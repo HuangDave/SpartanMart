@@ -1,10 +1,11 @@
-package com.spartanmart;
+package com.spartanmart.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.spartanmart.R;
 import com.spartanmart.model.User;
 
 import java.util.HashMap;
@@ -26,7 +27,6 @@ public class ProfileActivity extends AppCompatActivity {
         HashMap<String, Object> data = new HashMap<>();
         data.put("email", "testemail@sjsu.edu");
         data.put("password", "1234567");
-        User newUser = new User(data);
     }
 
     @OnClick(R.id.bSave)

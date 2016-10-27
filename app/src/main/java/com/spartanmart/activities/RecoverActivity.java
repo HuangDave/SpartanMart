@@ -1,4 +1,4 @@
-package com.spartanmart;
+package com.spartanmart.activities;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.spartanmart.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,10 +19,10 @@ import butterknife.OnClick;
 
 public class RecoverActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.bRecover) Button bRecover;
-
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +31,8 @@ public class RecoverActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    private boolean emailExists(String email, OnCompleteListener listener) {
-        mAuth.fetchProvidersForEmail(email).addOnCompleteListener(listener);
-        return true;
-    }
-
     @OnClick(R.id.bRecover)
-    public void onUserSelectSubmit(Button button) {
+    public void onUserSelectSubmit() {
         final String email = etEmail.getText().toString();
         boolean cancel = false;
         bRecover.setEnabled(false);

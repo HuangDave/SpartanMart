@@ -16,9 +16,11 @@ public class Object {
 
     protected static DatabaseReference baseRef =FirebaseDatabase.getInstance().getReference();
     protected DatabaseReference ref;
-    protected String id;
+    public String id;
     protected HashMap<String, java.lang.Object> data = new HashMap<>();
     protected boolean exists = false;
+    protected Date createdAt;
+    protected Date updatedAt;
 
     public Object(String id) {
         this.id = id;

@@ -4,7 +4,7 @@
     android:id="@+id/activity_market"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.spartanmart.MarketActivity"
+    tools:context="com.spartanmart.activities.MarketActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.SearchView

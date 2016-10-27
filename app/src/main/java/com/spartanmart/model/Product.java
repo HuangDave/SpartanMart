@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by David on 10/21/16.
@@ -16,13 +17,16 @@ import java.util.Date;
 
 public class Product extends Object {
 
-    protected DatabaseReference productRef = baseRef.child("products");
-    protected DatabaseReference ref;
+    protected static DatabaseReference productRef = baseRef.child("products");
     protected String sellerId;
     public Image image;
     public String name;
     public Double price;
     public String description;
+
+    public Product() {
+        super();
+    }
 
     public Product(String id) {
         super(id);
@@ -38,6 +42,7 @@ public class Product extends Object {
 
     @Override
     public void fetchData() {
+        final Semaphore sema = new Semaphore(0);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,6 +54,7 @@ public class Product extends Object {
                     description = p.description;
                     exists = true;
                 }
+                sema.release();
             }
 
             @Override
@@ -56,6 +62,12 @@ public class Product extends Object {
                 Log.w("", databaseError.toString());
             }
         });
+
+        try {
+            sema.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -64,29 +76,5 @@ public class Product extends Object {
         data.put("price", price);
         data.put("udpatedAt", new Date());
         super.save();
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public Double getPrice() {
-        return price;
     }
 }

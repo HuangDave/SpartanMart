@@ -1,4 +1,4 @@
-package com.spartanmart;
+package com.spartanmart.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.spartanmart.R;
 import com.spartanmart.model.User;
 
 import butterknife.ButterKnife;
@@ -50,10 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
-    }
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -77,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !(password.length() > 4)) {
             etPassword.setError(getString(R.string.error_invalid_password));
             focusView = etPassword;
             cancel = true;
@@ -122,16 +119,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.bRecovery)
-    public void onUserSelectRecovery(Button button) {
+    public void onUserSelectRecover() {
         Intent recoveryIntent = new Intent(getApplicationContext(), RecoverActivity.class);
         startActivity(recoveryIntent);
     }
 
-    /**
-        Go to RegisterActivity
-     */
     @OnClick(R.id.bRegister)
-    public void onUserSelectRegister(Button button) {
+    public void onUserSelectRegister() {
         Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(registerIntent);
     }
