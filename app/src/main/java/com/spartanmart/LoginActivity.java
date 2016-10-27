@@ -1,6 +1,7 @@
 package com.spartanmart;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.spartanmart.model.User;
 
 import butterknife.ButterKnife;
@@ -22,14 +25,33 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
 
     // UI references.
-    @BindView(R.id.etEmail) EditText etEMail;
+    @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.etPassword) EditText etPassword;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        etEmail.setText("testemail@sjsu.edu");
+        etPassword.setText("1234567");
+    }
+
+    @Override
+    protected void onStop() {
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+
+        super.onStop();
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 4;
     }
 
     /**
@@ -38,15 +60,18 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     @OnClick(R.id.bLogin)
-    public void onUserSelectLogin() {
+    public void onUserSelectLogin(final Button button) {
+
+        // Disable button.
+        button.setEnabled(false);
 
         // Reset errors.
-        etEMail.setError(null);
+        etEmail.setError(null);
         etPassword.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = etEMail.getText().toString();
-        String password = etPassword.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -60,12 +85,12 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            etEMail.setError(getString(R.string.error_field_required));
-            focusView = etEMail;
+            etEmail.setError(getString(R.string.error_field_required));
+            focusView = etEmail;
             cancel = true;
         } else if (!email.contains("@sjsu.edu")) {
-            etEMail.setError(getString(R.string.error_invalid_email));
-            focusView = etEMail;
+            etEmail.setError(getString(R.string.error_invalid_email));
+            focusView = etEmail;
             cancel = true;
         }
 
@@ -73,21 +98,33 @@ public class LoginActivity extends AppCompatActivity {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
+            button.setEnabled(true);
 
         } else {
 
-            User.login(email, password, new User.LoginHandler() {
+            mAuthListener = new FirebaseAuth.AuthStateListener() {
                 @Override
-                public void onLoginSuccessful() {
-                    Log.d("LOGIN", "Successful");
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    final FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        Log.d("LOGIN", "Successful");
+                        Intent marketIntent = new Intent(getApplicationContext(), MarketActivity.class);
+                        startActivity(marketIntent);
+                    } else {
+                        Log.d("LOGIN", "Failed");
+                    }
+                    button.setEnabled(true);
                 }
+            };
 
-                @Override
-                public void onLoginFailed() {
-                    Log.d("LOGIN", "Failed");
-                }
-            });
+            User.login(email, password, mAuthListener);
         }
+    }
+
+    @OnClick(R.id.bRecovery)
+    public void onUserSelectRecovery(Button button) {
+        Intent recoveryIntent = new Intent(getApplicationContext(), RecoverActivity.class);
+        startActivity(recoveryIntent);
     }
 
     /**
@@ -96,11 +133,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.bRegister)
     public void onUserSelectRegister(Button button) {
         Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-        startActivityForResult(registerIntent, 1);
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        startActivity(registerIntent);
     }
 
 }

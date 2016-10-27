@@ -1,11 +1,17 @@
 package com.spartanmart;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.spartanmart.model.User;
 
 import butterknife.BindView;
@@ -24,38 +30,40 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    protected boolean isValidCard(String number, String code, String exp) {
-        return true;
-    }
-
     @OnClick(R.id.bRegister)
-    public void onUserSelectRegister() {
+    public void onUserSelectRegister(final Button button) {
 
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        button.setEnabled(false);
+
+        boolean cancelled = false;
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             etEmail.setError(getString(R.string.error_field_required));
-            etEmail.requestFocus();
-            return;
 
         } else if (!email.contains("@sjsu.edu")) {
             etEmail.setError(getString(R.string.error_invalid_email));
+        }
+
+        if (cancelled) {
             etEmail.requestFocus();
+            button.setEnabled(true);
             return;
         }
 
-        User.register(this, email, password, new User.RegisterHandler() {
+        User.register(email, password, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onRegisterSuccessful() {
-                Log.d("REGISTER", "Successful");
-                finishActivity(1);
-            }
-
-            @Override
-            public void onRegisterFailed() {
-                Log.d("REGISTER", "Failed");
-
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d("REGISTER", "Successful");
+                    finishActivity(1);
+                    Intent marketIntent = new Intent(getApplicationContext(), MarketActivity.class);
+                    startActivity(marketIntent);
+                } else {
+                    Log.d("REGISTER", "Failed");
+                    button.setEnabled(true);
+                }
             }
         });
     }

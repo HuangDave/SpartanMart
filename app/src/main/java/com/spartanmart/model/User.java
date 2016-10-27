@@ -3,6 +3,7 @@ package com.spartanmart.model;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -11,12 +12,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.spartanmart.LoginActivity;
+
+import java.util.Map;
 
 /**
  * Created by David on 10/21/16.
  */
-
+@IgnoreExtraProperties
 public class User extends Object {
 
     public interface RegisterHandler {
@@ -30,86 +34,47 @@ public class User extends Object {
     }
 
     protected static DatabaseReference userRef = baseRef.child("users");
-    protected String email;
-    protected String password;
-    protected String firstName;
-    protected String lastName;
-    protected String contact;
-    protected Product[] products;
+    public String email;
+    public String password;
+    public String firstName;
+    public String lastName;
+    public String contact;
+    public Product[] products;
 
     public User(String id) {
         super(id);
         ref = userRef.child(id);
     }
 
-    public static void register(Activity activity, final String email, final String password, final RegisterHandler handler) {
-        FirebaseAuth.getInstance()
-                .createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            handler.onRegisterSuccessful();
-                        } else {
-                            handler.onRegisterFailed();
-                        }
-                    }
-                });
+    public User(Map<String, java.lang.Object> data) {
+        super();
+        ref = userRef;
+        email = data.get("email").toString();
+        password = data.get("password").toString();
     }
 
-    public static void login(final String email, final String password, final LoginHandler handler) {
+    public static void register(final String email, final String password, final OnCompleteListener<AuthResult> listener) {
+        FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(listener);
+    }
+
+    public static void login(final String email, final String password, final FirebaseAuth.AuthStateListener listener) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = auth.getCurrentUser();
-                if (user != null) {
-                    handler.onLoginSuccessful();
-                } else {
-                    handler.onLoginFailed();
-                }
-            }
-        });
+        auth.addAuthStateListener(listener);
         auth.signInWithEmailAndPassword(email, password);
     }
 
-    public String getEmail() {
-        return email;
-    }
+    @Override
+    public void save() {
+        if (!exists) {
+            id = ref.push().getKey();
+            ref.child(id);
+            exists = true;
+        }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void addProduct(Product p) {
-
-    }
-
-    public Product[] getProducts() {
-        return products;
+        Log.d("Updating user", id);
+        data.put("email", email);
+        userRef.child(id).setValue(data);
     }
 }

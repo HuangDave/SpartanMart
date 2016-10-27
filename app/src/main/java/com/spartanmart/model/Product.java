@@ -19,9 +19,10 @@ public class Product extends Object {
     protected DatabaseReference productRef = baseRef.child("products");
     protected DatabaseReference ref;
     protected String sellerId;
-    protected Image image;
-    protected Double price;
-    protected String description;
+    public Image image;
+    public String name;
+    public Double price;
+    public String description;
 
     public Product(String id) {
         super(id);
