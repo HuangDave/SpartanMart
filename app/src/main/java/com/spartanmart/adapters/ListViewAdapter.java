@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spartanmart.R;
 import com.spartanmart.model.Product;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,9 +19,7 @@ import butterknife.ButterKnife;
 /**
  * Created by David on 10/25/16.
  */
-
-public class ListViewAdapter extends BaseAdapter {
-
+public class ListViewAdapter extends ArrayAdapter<Product> {
 
     public static class ItemViewHolder {
         @BindView(R.id.imageView) ImageView mImageView;
@@ -31,49 +31,27 @@ public class ListViewAdapter extends BaseAdapter {
         }
     }
 
-    protected Context mContext;
-    protected Product[] mProducts;
-
-    public ListViewAdapter(Context c) {
-        mContext = c;
-    }
-
-    @Override
-    public int getCount() {
-        return mProducts.length;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public Product getItem(int i) {
-        return mProducts[i];
+    public ListViewAdapter(Context c, ArrayList<Product> products) {
+        super(c, R.layout.marketview_item, products);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        /*
         ItemViewHolder viewHolder;
 
         if (view == null) {
-            LayoutInflater inflater = new LayoutInflater();
-            view = inflator.inflate(R.layout.marketview_item, viewGroup, false);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            view = inflater.inflate(R.layout.marketview_item, viewGroup, false);
             viewHolder = new ItemViewHolder(view);
             view.setTag(viewHolder);
         } else {
-            viewHolder = (ItemViewHolder) view.getTag();
+            viewHolder = (ItemViewHolder)view.getTag();
         }
 
-        Product p = mProducts[i];
+        Product p = getItem(i);
         viewHolder.tvTitle.setText(p.name);
         viewHolder.tvPrice.setText(String.format("$%.2f", p.price));
 
         return view;
-        */
-        return null;
     }
-
 }
