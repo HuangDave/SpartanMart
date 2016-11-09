@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword.setText("1234567");
 
         ServerManager manager = ServerManager.manager;
-        manager.mContext = getApplicationContext();
+        manager.setContext(getApplicationContext());
     }
 
     /**

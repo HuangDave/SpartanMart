@@ -17,8 +17,7 @@ public class ServerManager {
     private final String baseURL = "https://spartanmarttest.herokuapp.com/";
     private Retrofit retrofit;
     private AuthToken mAuthToken;
-
-    public Context mContext;
+    private Context mContext;
     public SpartanMartAPI service;
 
 
@@ -28,11 +27,15 @@ public class ServerManager {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(SpartanMartAPI.class);
-        getSessionToken();
     }
 
     public static ServerManager sharedManager() {
         return manager;
+    }
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+        getSessionToken();
     }
 
     public void updateSessionToken(AuthToken token) {
@@ -43,10 +46,15 @@ public class ServerManager {
     }
 
     private void getSessionToken() {
-        SharedPreferences settings = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-        String tokenString = settings.getString("com.spartanmart.session_token", ""/*default value*/);
-        mAuthToken = new AuthToken(tokenString);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String tokenString = settings.getString("com.spartanmart.session_token", "");
+        if (tokenString != "") {
+            mAuthToken = new AuthToken(tokenString);
+        }
+    }
+
+    public boolean attemptToRestoreSession() {
+        return false;
     }
 
     public void logoutFromCurrentSession() {
