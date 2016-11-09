@@ -1,11 +1,10 @@
 package com.spartanmart.model;
 
-import android.util.Log;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.spartanmart.server.AuthToken;
 import com.spartanmart.server.ServerManager;
-import com.spartanmart.server.SpartanMartAuth;
+import com.spartanmart.server.SpartanMartAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,25 +41,27 @@ public class User extends DBObject {
     @SerializedName("products")
     public Product[] products;
 
-    public static void create(final String email, final String password, final SpartanMartAuth.AuthCallback callback) {
+    public static void register(final String email, final String password, final SpartanMartAPI.AuthCallback callback) {
 
     }
 
-    public static void login(final String email, final String password, final SpartanMartAuth.AuthCallback callback) {
+    public static void login(final String email, final String password, final SpartanMartAPI.AuthCallback callback) {
+
         final ServerManager manager = ServerManager.manager;
-        Call<SpartanMartAuth.AuthToken> auth = ServerManager.sharedManager().service.authenticate(email, password);
-        auth.enqueue(new Callback<SpartanMartAuth.AuthToken>() {
+        Call<AuthToken> auth = manager.service.authenticate(email, password);
+
+        auth.enqueue(new Callback<AuthToken>() {
+
             @Override
-            public void onResponse(Call<SpartanMartAuth.AuthToken> call, Response<SpartanMartAuth.AuthToken> response) {
+            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
                 if (response.isSuccessful()) {
-                    manager.mAuthToken = response.body();
-                    Log.d("TOKEN", manager.mAuthToken.token);
+                    manager.updateSessionToken(response.body());
                     callback.onLoginSuccessful();
                 }
             }
 
             @Override
-            public void onFailure(Call<SpartanMartAuth.AuthToken> call, Throwable t) {
+            public void onFailure(Call<AuthToken> call, Throwable t) {
                 t.printStackTrace();
                 callback.onLoginFailed(t.getLocalizedMessage());
             }
@@ -72,7 +73,4 @@ public class User extends DBObject {
 
     }
 
-    public void logout() {
-
-    }
 }

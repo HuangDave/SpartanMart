@@ -26,9 +26,9 @@ public class MarketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_market);
         ButterKnife.bind(this);
 
-        mAdapter = new ProductAdapter(this, null);
-        mListView.setAdapter(mAdapter);
-        queryProducts(null);
+        //mAdapter = new ProductAdapter(this, null);
+        //mListView.setAdapter(mAdapter);
+        //queryProducts(null);
     }
 
     public void queryProducts(String[] keywords) {

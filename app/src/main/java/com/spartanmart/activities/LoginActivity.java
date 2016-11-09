@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.spartanmart.R;
 import com.spartanmart.model.User;
 import com.spartanmart.server.ServerManager;
-import com.spartanmart.server.SpartanMartAuth;
+import com.spartanmart.server.SpartanMartAPI;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -38,11 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword.setText("1234567");
 
         ServerManager manager = ServerManager.manager;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+        manager.mContext = getApplicationContext();
     }
 
     /**
@@ -92,10 +88,11 @@ public class LoginActivity extends AppCompatActivity {
             button.setEnabled(true);
 
         } else {
-            User.login(email, password, new SpartanMartAuth.AuthCallback() {
+            User.login(email, password, new SpartanMartAPI.AuthCallback() {
                 @Override
                 public void onLoginSuccessful() {
-                    Log.d("LOGIN SUCCESS", "");
+                    Intent marketIntent = new Intent(getApplicationContext(), MarketActivity.class);
+                    startActivity(marketIntent);
                 }
 
                 @Override
@@ -119,4 +116,3 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 }
-
