@@ -6,7 +6,7 @@ import android.support.v7.widget.SearchView;
 import android.widget.ListView;
 
 import com.spartanmart.R;
-import com.spartanmart.adapters.ListViewAdapter;
+import com.spartanmart.adapters.ProductAdapter;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class MarketActivity extends AppCompatActivity {
     @BindView(R.id.searchView) SearchView mSearchView;
     @BindView(R.id.listView) ListView mListView;
 
-    ListViewAdapter mAdapter;
+    ProductAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class MarketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_market);
         ButterKnife.bind(this);
 
-        mAdapter = new ListViewAdapter(this, null);
+        mAdapter = new ProductAdapter(this, null);
         mListView.setAdapter(mAdapter);
         queryProducts(null);
     }
@@ -35,12 +35,9 @@ public class MarketActivity extends AppCompatActivity {
 
     }
 
-    public void userDidEnterKeywords(String keywords) {
-        queryProducts(parseKeywords(keywords));
-    }
-
     public String[] parseKeywords(String s) {
         ArrayList<String> keywords = new ArrayList<>();
         return (String[])keywords.toArray();
     }
+
 }

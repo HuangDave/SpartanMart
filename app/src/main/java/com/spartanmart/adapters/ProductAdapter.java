@@ -17,9 +17,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by David on 10/25/16.
+ * Created by David on 11/6/16.
  */
-public class ListViewAdapter extends ArrayAdapter<Product> {
+
+public class ProductAdapter extends ArrayAdapter<Product> {
 
     public static class ItemViewHolder {
         @BindView(R.id.imageView) ImageView mImageView;
@@ -31,7 +32,7 @@ public class ListViewAdapter extends ArrayAdapter<Product> {
         }
     }
 
-    public ListViewAdapter(Context c, ArrayList<Product> products) {
+    public ProductAdapter(Context c, ArrayList<Product> products) {
         super(c, R.layout.marketview_item, products);
     }
 

@@ -2,9 +2,6 @@ package com.spartanmart.model;
 
 import android.util.Log;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.Date;
 import java.util.HashMap;
 
@@ -12,21 +9,19 @@ import java.util.HashMap;
  * Created by David on 10/21/16.
  */
 
-public class Object {
+public class DBObject {
 
-    protected static DatabaseReference baseRef =FirebaseDatabase.getInstance().getReference();
-    protected DatabaseReference ref;
     public String id;
     protected HashMap<String, java.lang.Object> data = new HashMap<>();
     protected boolean exists = false;
     protected Date createdAt;
     protected Date updatedAt;
 
-    public Object(String id) {
+    public DBObject(String id) {
         this.id = id;
     }
 
-    public Object() {
+    public DBObject() {
         id = null;
     }
 
@@ -42,15 +37,6 @@ public class Object {
 
     public void save() {
 
-        Log.d("", "saving user");
-
-        if (!exists) {
-            id = ref.push().getKey();
-            ref.child(id);
-            exists = true;
-            return;
-        }
-        ref.updateChildren(data);
     }
 }
 

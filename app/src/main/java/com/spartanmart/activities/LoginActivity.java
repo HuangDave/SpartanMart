@@ -1,7 +1,6 @@
 package com.spartanmart.activities;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,10 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.spartanmart.R;
 import com.spartanmart.model.User;
+import com.spartanmart.server.ServerManager;
+import com.spartanmart.server.SpartanMartAuth;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -29,9 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.etPassword) EditText etPassword;
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +36,12 @@ public class LoginActivity extends AppCompatActivity {
 
         etEmail.setText("testemail@sjsu.edu");
         etPassword.setText("1234567");
+
+        ServerManager manager = ServerManager.manager;
     }
 
     @Override
     protected void onStop() {
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-
         super.onStop();
     }
 
@@ -98,23 +92,17 @@ public class LoginActivity extends AppCompatActivity {
             button.setEnabled(true);
 
         } else {
-
-            mAuthListener = new FirebaseAuth.AuthStateListener() {
+            User.login(email, password, new SpartanMartAuth.AuthCallback() {
                 @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    final FirebaseUser user = mAuth.getCurrentUser();
-                    if (user != null) {
-                        Log.d("LOGIN", "Successful");
-                        Intent marketIntent = new Intent(getApplicationContext(), MarketActivity.class);
-                        startActivity(marketIntent);
-                    } else {
-                        Log.d("LOGIN", "Failed");
-                    }
-                    button.setEnabled(true);
+                public void onLoginSuccessful() {
+                    Log.d("LOGIN SUCCESS", "");
                 }
-            };
 
-            User.login(email, password, mAuthListener);
+                @Override
+                public void onLoginFailed(String localizedMessage) {
+                    Log.d("LOGIN FAILURE", "");
+                }
+            });
         }
     }
 

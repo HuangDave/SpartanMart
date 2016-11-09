@@ -1,7 +1,5 @@
 package com.spartanmart;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -12,9 +10,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -28,27 +29,33 @@ import static org.hamcrest.Matchers.not;
 public class LoginActivityTests {
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivity = new ActivityTestRule<>(LoginActivity.class, false);
+    public final ActivityTestRule<LoginActivity> mActivity = new ActivityTestRule<>(LoginActivity.class, false);
 
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        //Context appContext = InstrumentationRegistry.getTargetContext();
     }
 
     @Test
-    public void testUserLogin() {
-        String falseEmail = "testemail@yahoo.com";
-        String password = "1234567";
+    public void testInvalidLogin() throws IOException {
+        final String falseEmail = "testemail@yahoo.com";
+        final String password = "1234567";
 
-        String email = "testemail@sjsu.edu";
-
-        onView(withId(R.id.etEmail)).perform(replaceText(falseEmail));
-        onView(withId(R.id.etPassword)).perform(replaceText(password));
+        onView(withId(R.id.etEmail)).perform(typeText(falseEmail));
+        onView(withId(R.id.etPassword)).perform(typeText(password));
+        closeSoftKeyboard();
         onView(withId(R.id.bLogin)).perform(click()).check(matches(isEnabled()));
+    }
 
-        onView(withId(R.id.etEmail)).perform(replaceText(email));
-        onView(withId(R.id.etPassword)).perform(replaceText(password));
+    @Test
+    public void testValidLogin() throws IOException {
+        final String email = "testemail@sjsu.edu";
+        final String password = "1234567";
+
+        onView(withId(R.id.etEmail)).perform(typeText(email));
+        onView(withId(R.id.etPassword)).perform(typeText(password));
+        closeSoftKeyboard();
         onView(withId(R.id.bLogin)).perform(click()).check(matches(not(isEnabled())));
     }
 }

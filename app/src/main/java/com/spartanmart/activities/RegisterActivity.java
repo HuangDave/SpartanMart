@@ -1,19 +1,12 @@
 package com.spartanmart.activities;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.spartanmart.R;
-import com.spartanmart.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        User.register(email, password, new OnCompleteListener<AuthResult>() {
+        /*User.register(email, password, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -66,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                     button.setEnabled(true);
                 }
             }
-        });
+        });*/
     }
-
 }

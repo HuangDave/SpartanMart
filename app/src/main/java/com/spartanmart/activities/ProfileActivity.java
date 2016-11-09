@@ -2,7 +2,6 @@ package com.spartanmart.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.spartanmart.R;
@@ -10,7 +9,6 @@ import com.spartanmart.model.User;
 
 import java.util.HashMap;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
