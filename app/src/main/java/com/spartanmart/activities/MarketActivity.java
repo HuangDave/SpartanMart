@@ -7,17 +7,25 @@ import android.widget.ListView;
 
 import com.spartanmart.R;
 import com.spartanmart.adapters.ProductAdapter;
+import com.spartanmart.model.Product;
+import com.spartanmart.server.ServerManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MarketActivity extends AppCompatActivity {
 
     @BindView(R.id.searchView) SearchView mSearchView;
     @BindView(R.id.listView) ListView mListView;
 
+    ServerManager manager = ServerManager.manager
     ProductAdapter mAdapter;
 
     @Override
@@ -31,8 +39,23 @@ public class MarketActivity extends AppCompatActivity {
         //queryProducts(null);
     }
 
-    public void queryProducts(String[] keywords) {
+    public void queryRecent() {
+        HashMap<String, Object> queryMap = new HashMap<>();
+        queryMap.put("by", "createdAt");
+        queryMap.put("order", "descending");
+        manager.service.listProducts(manager.getToken(), queryMap).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
     }
 
     public String[] parseKeywords(String s) {

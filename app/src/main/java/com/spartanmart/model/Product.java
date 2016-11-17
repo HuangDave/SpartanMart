@@ -1,48 +1,36 @@
 package com.spartanmart.model;
 
-import android.media.Image;
-import android.util.Log;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-import java.util.concurrent.Semaphore;
+import java.util.List;
 
 /**
  * Created by David on 10/21/16.
  */
-
 public class Product extends DBObject {
 
-    protected String sellerId;
-    public Image image;
-    public String name;
-    public Double price;
+    @Expose
+    @SerializedName("sellerId")
+    public String sellerId;
+
+    @Expose
+    @SerializedName("image")
+    public String image;
+
+    @Expose
+    @SerializedName("title")
+    public String title;
+
+    @Expose
+    @SerializedName("description")
     public String description;
 
-    public Product() {
-        super();
-    }
+    @Expose
+    @SerializedName("price")
+    public Double price;
 
-    public Product(String id) {
-        super(id);
-    }
-
-    public Product(User seller, Double price, String description) {
-        super();
-        this.sellerId = seller.id;
-        this.price = price;
-        this.description = description;
-    }
-
-    @Override
-    public void fetchData() {
-
-    }
-
-    @Override
-    public void save() {
-        data.put("description", description);
-        data.put("price", price);
-        data.put("udpatedAt", new Date());
-        super.save();
-    }
+    @Expose
+    @SerializedName("tags")
+    public List<String> tags;
 }

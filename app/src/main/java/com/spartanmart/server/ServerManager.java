@@ -20,17 +20,12 @@ public class ServerManager {
     private Context mContext;
     public SpartanMartAPI service;
 
-
     private ServerManager() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(SpartanMartAPI.class);
-    }
-
-    public static ServerManager sharedManager() {
-        return manager;
     }
 
     public void setContext(Context mContext) {
@@ -51,6 +46,10 @@ public class ServerManager {
         if (tokenString != "") {
             mAuthToken = new AuthToken(tokenString);
         }
+    }
+
+    public String getToken() {
+        return mAuthToken.token;
     }
 
     public boolean attemptToRestoreSession() {

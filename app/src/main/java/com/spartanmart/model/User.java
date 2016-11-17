@@ -15,8 +15,6 @@ import retrofit2.Response;
  */
 public class User extends DBObject {
 
-    public String uid;
-
     @Expose
     @SerializedName("email")
     public String email;
@@ -67,10 +65,4 @@ public class User extends DBObject {
             }
         });
     }
-
-    @Override
-    public void save() {
-
-    }
-
 }

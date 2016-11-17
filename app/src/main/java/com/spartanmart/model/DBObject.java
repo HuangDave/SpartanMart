@@ -2,6 +2,9 @@ package com.spartanmart.model;
 
 import android.util.Log;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.HashMap;
 
@@ -11,32 +14,20 @@ import java.util.HashMap;
 
 public class DBObject {
 
-    public String id;
-    protected HashMap<String, java.lang.Object> data = new HashMap<>();
-    protected boolean exists = false;
-    protected Date createdAt;
-    protected Date updatedAt;
+    @Expose
+    @SerializedName("uid")
+    public String uid;
 
-    public DBObject(String id) {
-        this.id = id;
-    }
+    @Expose
+    @SerializedName("exists")
+    public boolean exists;
 
-    public DBObject() {
-        id = null;
-    }
+    @Expose
+    @SerializedName("createdAt")
+    public Date createdAt;
 
-    public void fetchData() { }
-
-    public String getObjectId() {
-        return data.get("id").toString();
-    }
-
-    public Date getCreatedAt() { return new Date(data.get("createdAy").toString()); }
-
-    public Date getUpdatedAt() { return new Date(data.get("updatedAt").toString()); }
-
-    public void save() {
-
-    }
+    @Expose
+    @SerializedName("updatedAt")
+    public Date updatedAt;
 }
 
