@@ -1,118 +1,144 @@
 package com.spartanmart.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.spartanmart.R;
-import com.spartanmart.model.User;
-import com.spartanmart.server.ServerManager;
-import com.spartanmart.server.SpartanMartAPI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-import butterknife.ButterKnife;
-import butterknife.BindView;
-import butterknife.OnClick;
-
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity {
 
-    // UI references.
-    @BindView(R.id.etEmail) EditText etEmail;
-    @BindView(R.id.etPassword) EditText etPassword;
+    private EditText inputEmail, inputPassword;
+    private Button btnSignIn, btnSignUp, btnResetPassword;
+    private ProgressBar progressBar;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
 
-        etEmail.setText("testemail@sjsu.edu");
-        etPassword.setText("1234567");
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
 
-        ServerManager manager = ServerManager.manager;
-        manager.setContext(getApplicationContext());
-    }
+        btnSignIn = (Button) findViewById(R.id.btn_signIn);
+        btnSignUp = (Button) findViewById(R.id.btn_register);
+        inputEmail = (EditText) findViewById(R.id.email);
+        inputPassword = (EditText) findViewById(R.id.password);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    @OnClick(R.id.bLogin)
-    public void onUserSelectLogin(final Button button) {
+        btnResetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            }
+        });
 
-        // Disable button.
-        button.setEnabled(false);
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = inputEmail.getText().toString();
+                final String password = inputPassword.getText().toString();
 
-        // Reset errors.
-        etEmail.setError(null);
-        etPassword.setError(null);
-
-        // Store values at the time of the login attempt.
-        final String email = etEmail.getText().toString();
-        final String password = etPassword.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !(password.length() > 4)) {
-            etPassword.setError(getString(R.string.error_invalid_password));
-            focusView = etPassword;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            etEmail.setError(getString(R.string.error_field_required));
-            focusView = etEmail;
-            cancel = true;
-        } else if (!email.contains("@sjsu.edu")) {
-            etEmail.setError(getString(R.string.error_invalid_email));
-            focusView = etEmail;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-            button.setEnabled(true);
-
-        } else {
-            User.login(email, password, new SpartanMartAPI.AuthCallback() {
-                @Override
-                public void onLoginSuccessful() {
-                    Intent marketIntent = new Intent(getApplicationContext(), MarketActivity.class);
-                    startActivity(marketIntent);
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                @Override
-                public void onLoginFailed(String localizedMessage) {
-                    Log.d("LOGIN FAILURE", "");
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            });
-        }
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                //authenticate user
+                auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                progressBar.setVisibility(View.GONE);
+                                if (!task.isSuccessful()) {
+                                    // there was an error
+                                    if (password.length() < 6) {
+                                        inputPassword.setError(getString(R.string.minimum_password));
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        });
+            }
+        });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String email = inputEmail.getText().toString().trim();
+                String password = inputPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+                //create user
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Toast.makeText(LoginActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                //progressBar.setVisibility(View.GONE);
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                }
+                            }
+                        });
+
+            }
+        });
     }
 
-    @OnClick(R.id.bRecovery)
-    public void onUserSelectRecover() {
-        Intent recoveryIntent = new Intent(getApplicationContext(), RecoverActivity.class);
-        startActivity(recoveryIntent);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
     }
-
-    @OnClick(R.id.bRegister)
-    public void onUserSelectRegister() {
-        Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-        startActivity(registerIntent);
-    }
-
 }

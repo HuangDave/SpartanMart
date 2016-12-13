@@ -50,7 +50,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         }
 
         Product p = getItem(i);
-        viewHolder.tvTitle.setText(p.name);
+        //viewHolder.tvTitle.setText(p.name);
         viewHolder.tvPrice.setText(String.format("$%.2f", p.price));
 
         return view;

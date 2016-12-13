@@ -29,6 +29,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.bSave)
     public void onSave(Button b) {
-        mUser.save();
+        //mUser.save();
     }
 }

@@ -25,7 +25,7 @@ public class MarketActivity extends AppCompatActivity {
     @BindView(R.id.searchView) SearchView mSearchView;
     @BindView(R.id.listView) ListView mListView;
 
-    ServerManager manager = ServerManager.manager
+    ServerManager manager = ServerManager.manager;
     ProductAdapter mAdapter;
 
     @Override
