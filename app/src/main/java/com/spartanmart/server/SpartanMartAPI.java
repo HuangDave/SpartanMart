@@ -33,7 +33,7 @@ public interface SpartanMartAPI {
 
     @FormUrlEncoded
     @POST("auth/login")
-    Call<AuthToken> authenticate(@Field("username") final String email, @Field("password") final String password);
+    Call<AuthToken> authenticate(@Field("email") final String email, @Field("password") final String password);
 
     /*
         Products

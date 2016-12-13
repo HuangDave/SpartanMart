@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.spartanmart.R;
 import com.spartanmart.model.User;
 import com.spartanmart.server.SpartanMartAPI;
 
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.email) public EditText inputEmail;
     @BindView(R.id.password) public EditText inputPassword;
     @BindView(R.id.btn_signIn) public Button btnSignIn;
-    @BindView(R.id.btn_register) public Btton btnSignUp
+    @BindView(R.id.btn_register) public Button btnSignUp;
     @BindView(R.id.btn_reset_password) public Button btnResetPassword;
     @BindView(R.id.progressBar) public ProgressBar progressBar;
 
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick
+    @OnClick(R.id.btn_register)
     public void onUserSelectSignUp() {
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
@@ -55,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick
-    public void onUserSelectSignIn() {
+    @OnClick(R.id.btn_signIn)
+    public void onUserSelectSignIn(Button b) {
         String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
 
@@ -76,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onLoginSuccessful() {
                 Log.d("LOGIN", "SUCCESSFUL");
-                //startActivity(marketIntent);
+                startActivity(marketIntent);
             }
 
             @Override
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick
+    @OnClick(R.id.btn_reset_password)
     public void onUserSelectResetPassword() {
         startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
     }

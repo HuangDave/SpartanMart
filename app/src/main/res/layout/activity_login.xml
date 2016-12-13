@@ -8,21 +8,21 @@
     >
 
     <ImageView
-        android:layout_width="@dimen/picWidth"
-        android:layout_height="@dimen/picHeight"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:src="@drawable/logo"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/marginPicTop"
+        android:layout_marginTop="10dp"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="@dimen/textSize"
-        android:text="@string/sm"
+        android:textSize="30sp"
+        android:text="SpartanMart"
         android:textColor="#2090f9"
-        android:paddingTop="@dimen/marginPicTop"
+        android:paddingTop="10dp"
         android:id="@+id/textView"
         />
 
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/email"
-        android:hint="@string/email"
+        android:hint="Email"
         android:textColorHint="#2090f9"
         android:textColor="#2090f9"
         android:drawableLeft="@drawable/user"
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password"
-        android:hint="@string/password"
+        android:hint="Password"
         android:textColorHint="#2090f9"
         android:textColor="#2090f9"
         android:drawableLeft="@drawable/password"
@@ -62,7 +62,7 @@
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/register"
+        android:text="Register"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:background="#e8bf31"
@@ -78,7 +78,7 @@
         android:id="@+id/btn_signIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/signIn"
+        android:text="Sign In"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:background="#e8bf31"

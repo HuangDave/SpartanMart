@@ -10,9 +10,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.spartanmart.R;
 
 import butterknife.BindView;
@@ -22,26 +19,22 @@ import butterknife.OnClick;
 public class ResetPasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.email)
-    private EditText inputEmail;
+    public EditText inputEmail;
 
     @BindView(R.id.btn_reset_password)
-    private Button btnReset;
+    public Button btnReset;
 
     @BindView(R.id.btn_back)
-    private Button btnBack;
-
-    private FirebaseAuth auth;
+    public Button btnBack;
 
     @BindView(R.id.progressBar)
-    private ProgressBar progressBar;
+    public ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
         ButterKnife.bind(this);
-
-        auth = FirebaseAuth.getInstance();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +52,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
             return;
         }
-
+/*
         progressBar.setVisibility(View.VISIBLE);
         auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -73,7 +66,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                         progressBar.setVisibility(View.GONE);
                     }
-                });
+                });*/
     }
 
 }
