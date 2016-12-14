@@ -71,13 +71,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
 
         User.login(email, password, new SpartanMartAPI.AuthCallback() {
             @Override
             public void onLoginSuccessful() {
-                Log.d("LOGIN", "SUCCESSFUL");
-                startActivity(marketIntent);
+
             }
 
             @Override

@@ -14,7 +14,7 @@ public class ServerManager {
 
     public static final ServerManager manager = new ServerManager();
 
-    private final String baseURL = "https://spartanmarttest.herokuapp.com/";
+    private final String baseURL = "https://spartanmartserver.herokuapp.com/";
     private Retrofit retrofit;
     private AuthToken mAuthToken;
     private Context mContext;
@@ -34,10 +34,10 @@ public class ServerManager {
     }
 
     public void updateSessionToken(AuthToken token) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("com.spartanmart.session_token", token.token);
-        editor.commit();
+        //SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        //SharedPreferences.Editor editor = settings.edit();
+        //editor.putString("com.spartanmart.session_token", token.token);
+        //editor.commit();
     }
 
     private void getSessionToken() {
