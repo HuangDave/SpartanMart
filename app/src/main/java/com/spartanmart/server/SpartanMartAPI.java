@@ -1,14 +1,13 @@
 package com.spartanmart.server;
 
-import com.google.gson.internal.bind.ObjectTypeAdapter;
 import com.spartanmart.model.Product;
+import com.spartanmart.model.Transaction;
 import com.spartanmart.model.User;
 
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -18,7 +17,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by David on 11/7/16.
@@ -95,9 +93,9 @@ public interface SpartanMartAPI {
 
     @PUT("products/{userId}/{productId}")
     Call<Map<String, Object>> updateProduct(@Header("Authorization") final String token,
-                                @Path("userId") final String userId,
-                                @Path("productId") final String productId,
-                                @FieldMap final Map<String, Object> updates);
+                                            //@Path("userId") final String userId,
+                                            @Path("productId") final String productId,
+                                            @FieldMap final Map<String, Object> updates);
 
     @GET("products/{userId}/list")
     Call<List<Product>> listProducts(@Header("Authorization") final String token,

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.spartanmart.server.ServerManager;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import java.util.HashMap;
  */
 
 public class DBObject {
+
+    protected static ServerManager manager = ServerManager.manager;
 
     @Expose
     @SerializedName("uid")

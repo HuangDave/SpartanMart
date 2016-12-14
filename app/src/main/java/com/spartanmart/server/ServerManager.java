@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.spartanmart.model.User;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -19,6 +21,7 @@ public class ServerManager {
     private AuthToken mAuthToken;
     private Context mContext;
     public SpartanMartAPI service;
+    public static User currentUser;
 
     private ServerManager() {
         retrofit = new Retrofit.Builder()

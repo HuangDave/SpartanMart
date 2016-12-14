@@ -6,6 +6,10 @@ import com.spartanmart.server.AuthToken;
 import com.spartanmart.server.ServerManager;
 import com.spartanmart.server.SpartanMartAPI;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,12 +28,8 @@ public class User extends DBObject {
     public String password;
 
     @Expose
-    @SerializedName("first_name")
-    public String firstName;
-
-    @Expose
-    @SerializedName("last_name")
-    public String lastName;
+    @SerializedName("name")
+    public HashMap<String, String> name;
 
     @Expose
     @SerializedName("contact")
@@ -37,7 +37,7 @@ public class User extends DBObject {
 
     @Expose
     @SerializedName("products")
-    public Product[] products;
+    public List<String> products;
 
     public static void register(final String email, final String password, final SpartanMartAPI.AuthCallback callback) {
 
