@@ -9,6 +9,7 @@ import com.spartanmart.server.SpartanMartAPI;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,5 +65,24 @@ public class User extends DBObject {
                 callback.onLoginFailed(t.getLocalizedMessage());
             }
         });
+    }
+
+    public void addProduct(final Map<String, Object> info, Callback<Product> callback) {
+        manager.service.addProduct(manager.getToken(), uid, info).enqueue(callback);
+    }
+
+    public void removeProduct(final String productId, Callback<Map<String, Object>> callback) {
+        manager.service.removeProduct(manager.getToken(), uid, productId).enqueue(callback);
+    }
+
+    public void getAllProducts(Callback<List<Product>> callback) {
+        manager.service.listProducts(manager.getToken(), uid).enqueue(callback);
+    }
+
+    public void update(Callback<User> callback) {
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put("password", password);
+        updates.put("contact", contact);
+        manager.service.updateAccount(manager.getToken(), uid, updates).enqueue(callback);
     }
 }

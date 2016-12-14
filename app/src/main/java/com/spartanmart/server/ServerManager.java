@@ -6,6 +6,9 @@ import android.preference.PreferenceManager;
 
 import com.spartanmart.model.User;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -37,10 +40,25 @@ public class ServerManager {
     }
 
     public void updateSessionToken(AuthToken token) {
-        //SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-        //SharedPreferences.Editor editor = settings.edit();
-        //editor.putString("com.spartanmart.session_token", token.token);
-        //editor.commit();
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("com.spartanmart.session_token", token.token);
+        editor.commit();
+
+        mAuthToken = token;
+        service.getUser(token.token, token.user.uid).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    currentUser = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private void getSessionToken() {
@@ -54,13 +72,4 @@ public class ServerManager {
     public String getToken() {
         return mAuthToken.token;
     }
-
-    public boolean attemptToRestoreSession() {
-        return false;
-    }
-
-    public void logoutFromCurrentSession() {
-
-    }
-
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.spartanmart.R;
 import com.spartanmart.model.User;
+import com.spartanmart.server.ServerManager;
 import com.spartanmart.server.SpartanMartAPI;
 
 import butterknife.BindView;
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        ServerManager.manager.setContext(getApplicationContext());
     }
 
     @OnClick(R.id.btn_register)
