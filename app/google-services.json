@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "316242318224",
+    "firebase_url": "https://spartanmart-4c662.firebaseio.com",
+    "project_id": "spartanmart-4c662",
+    "storage_bucket": "spartanmart-4c662.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316242318224:android:41a60a5082058946",
+        "android_client_info": {
+          "package_name": "spartanmart.group15.cmpe131.spartanmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316242318224-oqek6hqd4i0t072g8134b4o9sl8emptp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "spartanmart.group15.cmpe131.spartanmart",
+            "certificate_hash": "30AC0C0CA2521BFC66BBF54C9CE0EE9DD613BCAF"
+          }
+        },
+        {
+          "client_id": "316242318224-hub6pe66luks85793dg5af3p5m4vul7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3wYUyBvJVWy1PQauZ9J2es4hDONY-4OU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316242318224-hub6pe66luks85793dg5af3p5m4vul7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
