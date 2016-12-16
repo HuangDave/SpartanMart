@@ -1,0 +1,72 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eef9fcfa"
+    android:id="@+id/gridView">
+
+    <ImageView
+        android:layout_height="50dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"
+        tools:ignore="ContentDescription"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="50dp" />
+
+    <Button
+        android:text="My Account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_myAccount"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="50dp"
+       />
+
+    <Button
+        android:text="Notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_notification"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Sell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_sell"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp" />
+
+    <SearchView
+        android:layout_height="wrap_content"
+        android:background="@color/common_google_signin_btn_text_light_default"
+        android:layout_width="380dp"
+        android:layout_below="@+id/btn_myAccount"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/searchView"
+        tools:ignore="NewApi" />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eef9fcfa"
+        android:numColumns="auto_fit"
+        tools:ignore="UselessLeaf"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/searchView"
+        android:layout_marginTop="10dp"
+
+        />
+
+</RelativeLayout>
+
+
+
+

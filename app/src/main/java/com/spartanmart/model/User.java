@@ -79,7 +79,7 @@ public class User extends DBObject {
         manager.service.listProducts(manager.getToken(), uid).enqueue(callback);
     }
 
-    public void update(Callback<User> callback) {
+    public void update(Callback<Void> callback) {
         HashMap<String, Object> updates = new HashMap<>();
         updates.put("password", password);
         updates.put("contact", contact);

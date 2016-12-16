@@ -1,0 +1,82 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eef9fcfa"
+    >
+    <EditText
+        android:id="@+id/old_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Old Email"
+        android:textColorHint="#e8bf31"
+        android:inputType="textEmailAddress"
+        />
+
+    <EditText
+        android:id="@+id/new_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_new_email"
+        android:textColorHint="#e8bf31"
+        android:inputType="textEmailAddress"
+        />
+
+    <Button
+        android:id="@+id/change_email_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_email"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Old Password"
+        android:textColorHint="#e8bf31"
+        android:layout_marginTop="10dp"
+        android:inputType="textPassword"
+        />
+
+    <EditText
+        android:id="@+id/newPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_pass"
+        android:textColorHint="#e8bf31"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:id="@+id/change_password_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_password"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/remove_user_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/remove_user"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/sign_out"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/btn_sign_out"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

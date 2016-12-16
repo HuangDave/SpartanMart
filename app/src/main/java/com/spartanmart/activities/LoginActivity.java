@@ -22,12 +22,23 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.email) public EditText inputEmail;
-    @BindView(R.id.password) public EditText inputPassword;
-    @BindView(R.id.btn_signIn) public Button btnSignIn;
-    @BindView(R.id.btn_register) public Button btnSignUp;
-    @BindView(R.id.btn_reset_password) public Button btnResetPassword;
-    @BindView(R.id.progressBar) public ProgressBar progressBar;
+    @BindView(R.id.email)
+    public EditText inputEmail;
+
+    @BindView(R.id.password)
+    public EditText inputPassword;
+
+    @BindView(R.id.btn_signIn)
+    public Button btnSignIn;
+
+    @BindView(R.id.btn_register)
+    public Button btnSignUp;
+
+    @BindView(R.id.btn_reset_password)
+    public Button btnResetPassword;
+
+    @BindView(R.id.progressBar)
+    public ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +85,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        //progressBar.setVisibility(View.VISIBLE);
-
         User.login(email, password, new SpartanMartAPI.AuthCallback() {
             @Override
             public void onLoginSuccessful() {
-
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
 
             @Override

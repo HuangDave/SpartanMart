@@ -51,7 +51,7 @@ public interface SpartanMartAPI {
                        @Path("userId") final String userId);
 
     @PUT("users/{userId}")
-    Call<User> updateAccount(@Header("Authorization") final String token,
+    Call<Void> updateAccount(@Header("Authorization") final String token,
                              @Path("userId") final String userId,
                              @FieldMap final Map<String, Object> updates);
 
