@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ServerManager.manager.setContext(getApplicationContext());
+
+        // TODO: remove test account later
+        inputEmail.setText("john.appleseed@sjsu.edu", EditText.BufferType.EDITABLE);
+        inputPassword.setText("1234567", EditText.BufferType.EDITABLE);
     }
 
     @OnClick(R.id.btn_register)
@@ -89,11 +92,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onLoginSuccessful() {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
 
             @Override
             public void onLoginFailed(String localizedMessage) {
-                Log.d("LOGIN FAILURE", "");
+                Toast.makeText(getApplicationContext(), localizedMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
