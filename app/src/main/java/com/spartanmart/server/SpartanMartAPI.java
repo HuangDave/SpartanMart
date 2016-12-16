@@ -18,6 +18,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by David on 11/7/16.
@@ -110,6 +111,13 @@ public interface SpartanMartAPI {
     Call<Map<String, Object>> removeProduct(@Header("Authorization") final String token,
                                             @Path("userId") final String userId,
                                             @Path("productId") final String productId);
+
+    /**
+     * Product Query
+     */
+    @GET("products/recent?")
+    Call<List<Product>> queryRecentProducts(@Header("Authorization") final String token,
+                                            @Query("limit") final int limit);
 
     /**
      * Transaction History Endpoints

@@ -23,8 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_myAccount"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="50dp"
-       />
+        android:layout_marginTop="50dp" />
 
     <Button
         android:text="Notification"
@@ -56,14 +55,14 @@
     <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eef9fcfa"
-        android:numColumns="auto_fit"
+        android:verticalSpacing="2dp"
+        android:minHeight="75dp"
+        android:background="@android:color/black"
+        android:numColumns="1"
         tools:ignore="UselessLeaf"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/searchView"
-        android:layout_marginTop="10dp"
-
-        />
+        android:id="@+id/queryView" />
 
 </RelativeLayout>
 
