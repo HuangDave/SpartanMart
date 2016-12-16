@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,7 +75,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_signIn)
-    public void onUserSelectSignIn(Button b) {
+    public void onUserSelectSignIn(final Button b) {
+        b.setEnabled(false);
+
         String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
 
@@ -97,7 +100,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onLoginFailed(String localizedMessage) {
+                b.setEnabled(true);
                 Toast.makeText(getApplicationContext(), localizedMessage, Toast.LENGTH_SHORT).show();
+                Log.d("LOGIN", "FAILED");
             }
         });
     }

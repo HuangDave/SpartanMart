@@ -1,5 +1,7 @@
 package com.spartanmart.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.spartanmart.server.AuthToken;
@@ -45,23 +47,32 @@ public class User extends DBObject {
     }
 
     public static void login(final String email, final String password, final SpartanMartAPI.AuthCallback callback) {
-
-        final ServerManager manager = ServerManager.manager;
-        Call<AuthToken> auth = manager.service.authenticate(email, password);
-
-        auth.enqueue(new Callback<AuthToken>() {
-
+        manager.service.authenticate(email, password).enqueue(new Callback<AuthToken>() {
             @Override
             public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
                 if (response.isSuccessful()) {
-                    manager.updateSessionToken(response.body());
-                    callback.onLoginSuccessful();
+                    AuthToken token = response.body();
+                    manager.updateSessionToken(token);
+
+                    manager.service.getUser("bearer " + token.token, token.user.uid).enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.code() == 200) {
+                                manager.currentUser = response.body();
+                                callback.onLoginSuccessful();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            callback.onLoginFailed(t.getLocalizedMessage());
+                        }
+                    });
                 }
             }
 
             @Override
             public void onFailure(Call<AuthToken> call, Throwable t) {
-                t.printStackTrace();
                 callback.onLoginFailed(t.getLocalizedMessage());
             }
         });

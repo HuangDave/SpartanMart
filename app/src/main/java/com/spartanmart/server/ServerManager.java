@@ -3,8 +3,11 @@ package com.spartanmart.server;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.spartanmart.model.User;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,19 +49,6 @@ public class ServerManager {
         editor.commit();
 
         mAuthToken = token;
-        service.getUser(token.token, token.user.uid).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    currentUser = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
     }
 
     private void getSessionToken() {
