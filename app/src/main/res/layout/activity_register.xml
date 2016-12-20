@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.spartanmart.activities.authentication.RegisterActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etEmail"
+        android:hint="@string/email"
+        android:textColorHint="#2090f9"
+        android:textColor="#2090f9"
+        android:drawableLeft="@drawable/user"
+        android:drawablePadding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#e6e7e9"
+        android:padding="15dp"
+        android:inputType="textEmailAddress"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etPassword"
+        android:hint="@string/password"
+        android:textColorHint="#2090f9"
+        android:textColor="#2090f9"
+        android:drawableLeft="@drawable/password"
+        android:drawablePadding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="#e6e7e9"
+        android:padding="15dp"
+        android:inputType="textPassword"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/etFirstName"
+            android:hint="First"
+            android:textColorHint="#2090f9"
+            android:textColor="#2090f9"
+            android:drawableLeft="@drawable/password"
+            android:drawablePadding="10dp"
+            android:background="#e6e7e9"
+            android:padding="15dp"
+            android:maxLength="11"
+            android:inputType="textPersonName"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/etLastName"
+            android:hint="Last"
+            android:textColorHint="#2090f9"
+            android:textColor="#2090f9"
+            android:drawableLeft="@drawable/password"
+            android:layout_marginLeft="20dp"
+            android:drawablePadding="10dp"
+            android:background="#e6e7e9"
+            android:padding="15dp"
+            android:maxLength="11"
+            android:inputType="textPersonName"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etContact"
+        android:hint="Contact"
+        android:textColorHint="#2090f9"
+        android:textColor="#2090f9"
+        android:drawableLeft="@drawable/password"
+        android:drawablePadding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="#e6e7e9"
+        android:padding="15dp"
+        android:maxLength="10"
+        android:inputType="number" />
+
+</LinearLayout>

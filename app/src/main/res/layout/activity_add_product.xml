@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_product"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.spartanmart.activities.product_management.AddProductActivity">
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:backgroundTint="@android:color/white"
+        android:id="@+id/bImage"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#D3D3D3"
+            android:text="Title"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:paddingLeft="5dp"
+            android:background="#F9F9F9"
+            android:id="@+id/etTitle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="1dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:gravity="center|top"
+            android:background="#D3D3D3"
+            android:text="Description"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minLines="10"
+            android:maxLength="2000"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:hint="Information Here"
+            android:background="#F9F9F9"
+            android:id="@+id/etDescription"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="1dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#D3D3D3"
+            android:text="Price"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="usd"
+            android:maxLength="4"
+            android:inputType="numberSigned"
+            android:paddingLeft="5dp"
+            android:background="#F9F9F9"
+            android:id="@+id/etPrice"/>
+
+    </LinearLayout>
+
+</LinearLayout>

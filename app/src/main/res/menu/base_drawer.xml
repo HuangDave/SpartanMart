@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_browse"
+            android:title="Browse" />
+        <item
+            android:id="@+id/nav_products"
+            android:title="Your Posts" />
+
+        <item
+            android:id="@+id/nav_payment_history"
+            android:title="Payment History" />
+    </group>
+
+        <group>
+            <item
+                android:id="@+id/nav_account"
+                android:title="Account" />
+            <item
+                android:id="@+id/nav_payment_methods"
+                android:title="Payment Methods" />
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Log Out" />
+        </group>
+
+</menu>
