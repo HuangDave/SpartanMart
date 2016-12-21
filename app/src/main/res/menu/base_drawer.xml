@@ -10,8 +10,8 @@
             android:title="Your Posts" />
 
         <item
-            android:id="@+id/nav_payment_history"
-            android:title="Payment History" />
+            android:id="@+id/nav_transactions"
+            android:title="Transactions" />
     </group>
 
         <group>

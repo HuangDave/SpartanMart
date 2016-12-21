@@ -1,5 +1,6 @@
 package com.spartanmart.server;
 
+import com.spartanmart.model.Card;
 import com.spartanmart.model.Product;
 import com.spartanmart.model.Transaction;
 import com.spartanmart.model.User;
@@ -48,6 +49,19 @@ public interface SpartanMartAPI {
     Call<User> getUser(@Header("Authorization") final String token,
                        @Path("userId") final String userId);
 
+    @FormUrlEncoded
+    @PUT("users/password/{userId}")
+    Call<Void> updatePassword(@Header("Authorization") final String token,
+                              @Path("userId") final String userId,
+                              @FieldMap final Map<String, String> updates);
+
+    @FormUrlEncoded
+    @PUT("users/contact/{userId}")
+    Call<Void> updateContact(@Header("Authorization") final String token,
+                              @Path("userId") final String userId,
+                              @FieldMap final Map<String, String> updates);
+
+    @FormUrlEncoded
     @PUT("users/{userId}")
     Call<Void> updateAccount(@Header("Authorization") final String token,
                              @Path("userId") final String userId,
@@ -56,16 +70,18 @@ public interface SpartanMartAPI {
     /**
      * Payment Management Endpoints
      */
+    @FormUrlEncoded
     @POST("users/{userId}/cards")
     Call<Map<String, Object>> addCard(@Header("Authorization") final String token,
                                       @Path("userId") final String userId,
-                                      @FieldMap final Map<String, Object> card);
+                                      @FieldMap final Map<String, String> card);
 
+    @FormUrlEncoded
     @PUT("users/{userId}/cards/{cardId}")
     Call<Map<String, Object>> updateCard(@Header("Authorization") final String token,
                                          @Path("userId") final String userId,
                                          @Path("cardId") final String cardId,
-                                         @FieldMap final Map<String, Object> updates);
+                                         @FieldMap final Map<String, String> updates);
 
     @GET("users/{userId}/cards/{cardId}")
     Call<Map<String, Object>> getCard(@Header("Authorization") final String token,
@@ -73,8 +89,8 @@ public interface SpartanMartAPI {
                                       @Path("cardId") final String cardId);
 
     @GET("users/{userId}/cards/")
-    Call<List<Map<String, Object>>> listCards(@Header("Authorization") final String token,
-                                              @Path("userId") final String userId);
+    Call<List<Card>> listCards(@Header("Authorization") final String token,
+                              @Path("userId") final String userId);
 
     @DELETE("users/{userId}/cards/{cardId}")
     Call<String> removeCard(@Header("Authorization") final String token,
@@ -118,9 +134,20 @@ public interface SpartanMartAPI {
     Call<List<Product>> queryRecentProducts(@Header("Authorization") final String token,
                                             @Query("limit") final int limit);
 
+    @GET("products/search?")
+    Call<List<Product>> queryByKeyword(@Header("Authorization") final String token,
+                                       @Query("keyword") final String keyword,
+                                       @Query("limit") final int limit);
+
     /**
      * Transaction History Endpoints
      */
+
+    @POST("transactions/create/{userId}/{productId}")
+    Call<Void> createTransaction(@Header("Authorization") final String token,
+                                 @Path("userId") final String userId,
+                                 @Path("productId") final String productId);
+
     @GET("transactions/{userId}/list")
     Call<List<Transaction>> transactionHistory(@Header("Authorization") final String token,
                                                @Path("userId") final String userId);
@@ -128,4 +155,8 @@ public interface SpartanMartAPI {
     @GET("transactions/{transactionId}")
     Call<Transaction> getTransaction(@Header("Authorization") final String token,
                                      @Path("transactionId") final String transactionId);
+
+    @GET("transactions/{userId}/list")
+    Call<List<Transaction>> listTransactions(@Header("Authorization") final String token,
+                                             @Path("userId") final String userId);
 }

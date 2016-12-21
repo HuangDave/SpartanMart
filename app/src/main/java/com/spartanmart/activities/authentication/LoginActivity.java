@@ -48,33 +48,11 @@ public class LoginActivity extends AppCompatActivity {
 
         ServerManager.manager.setContext(getApplicationContext());
 
-        // TODO: remove test account later
-        inputEmail.setText("john.appleseed@sjsu.edu", EditText.BufferType.EDITABLE);
-        inputPassword.setText("1234567", EditText.BufferType.EDITABLE);
     }
 
     @OnClick(R.id.btn_register)
     public void onUserSelectSignUp() {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-        /*
-        String email = inputEmail.getText().toString().trim();
-        String password = inputPassword.getText().toString().trim();
-
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (password.length() < 6) {
-            Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-         */
     }
 
     @OnClick(R.id.btn_signIn)

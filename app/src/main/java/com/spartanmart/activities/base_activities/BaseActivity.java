@@ -22,14 +22,18 @@ import com.spartanmart.activities.authentication.LoginActivity;
 import com.spartanmart.activities.product_management.UserProductsAcitivity;
 import com.spartanmart.model.User;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     protected FrameLayout frameLayout;
+
     protected Toolbar mToolBar;
+
     protected DrawerLayout mDrawer;
+
     protected NavigationView mNavigationView;
 
     @Override
@@ -83,19 +87,18 @@ public class BaseActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
         Class c = null;
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.nav_browse:           c = BrowseActivity.class;               break;
             case R.id.nav_products:         c = UserProductsAcitivity.class;        break;
-            case R.id.nav_payment_history:  c = TransactionsActivity.class;         break;
+            case R.id.nav_transactions:     c = TransactionsActivity.class;         break;
             case R.id.nav_account:          c = AccountActivity.class;              break;
             case R.id.nav_payment_methods:  c = PaymentManagementActivity.class;    break;
             case R.id.nav_logout:           c = LoginActivity.class;                break;
         }
 
         startActivity(new Intent(getApplicationContext(), c));
+        finish();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.spartanmart.model.User;
 
 import retrofit2.Retrofit;
@@ -42,9 +44,12 @@ public class ServerManager {
      * Initializes Retrofit and generates a set of API endpoints for accessing server.
      */
     private ServerManager() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         api = retrofit.create(SpartanMartAPI.class);
     }

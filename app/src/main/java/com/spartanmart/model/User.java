@@ -125,22 +125,36 @@ public class User extends DBObject {
         return "("+areaCode+")"+firstThree+"-"+lastFour;
     }
 
+    public void updatePassword(String oldPassword, String newPassword, Callback<Void> callback) {
+        HashMap<String, String> updates = new HashMap<>();
+        updates.put("oldPassword", oldPassword);
+        updates.put("newPassword", newPassword);
+        manager.api.updatePassword(manager.getToken(), uid, updates).enqueue(callback);
+    }
+
+    public void updateContact(String contact, Callback<Void> callback) {
+        HashMap<String, String> updates = new HashMap<>();
+        updates.put("contact", contact);
+        manager.api.updateContact(manager.getToken(), uid, updates).enqueue(callback);
+    }
+
     public void addProduct(final Product product, Callback<Product> callback) {
         manager.api.addProduct(manager.getToken(), uid, product.serializedData()).enqueue(callback);
     }
 
-    public void removeProduct(final String productId, Callback<Map<String, Object>> callback) {
-        manager.api.removeProduct(manager.getToken(), uid, productId).enqueue(callback);
+    public void addTransaction(final String productId, Callback<Void> callback) {
+        manager.api.createTransaction(manager.getToken(), uid, productId).enqueue(callback);
     }
 
-    public void getAllProducts(Callback<List<Product>> callback) {
-        manager.api.listProducts(manager.getToken(), uid).enqueue(callback);
+    public void addCard(Card card, Callback<Map<String, Object>> callback) {
+        manager.api.addCard(manager.getToken(), uid, card.serializedData()).enqueue(callback);
     }
 
-    public void update(Callback<Void> callback) {
-        HashMap<String, Object> updates = new HashMap<>();
-        updates.put("password", password);
-        updates.put("contact", contact);
-        manager.api.updateAccount(manager.getToken(), uid, updates).enqueue(callback);
+    public void updateCard(Card card, Callback<Map<String, Object>> callback) {
+        manager.api.updateCard(manager.getToken(), uid, card.cardId, card.serializedData()).enqueue(callback);
+    }
+
+    public void removeCard(Card card, Callback<String> callback) {
+        manager.api.removeCard(manager.getToken(), uid, card.cardId).enqueue(callback);
     }
 }

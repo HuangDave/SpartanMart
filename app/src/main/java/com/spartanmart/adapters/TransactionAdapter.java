@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.spartanmart.R;
-import com.spartanmart.model.Product;
+import com.spartanmart.model.Transaction;
 
 import java.util.List;
 
@@ -17,28 +17,31 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by David on 12/15/16.
+ * Created by David on 12/20/16.
  */
-
-public class ProductAdapter extends ArrayAdapter<Product> {
+public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
     public static class ItemViewHolder {
 
         @Nullable
         @BindView(R.id.tvTitle)
-        TextView tvTitle;
+        public TextView tvTitle;
 
         @Nullable
-        @BindView(R.id.tvPrice)
-        TextView tvPrice;
+        @BindView(R.id.tvAmount)
+        public TextView tvAmount;
+
+        @Nullable
+        @BindView(R.id.tvStatus)
+        public TextView tvStatus;
 
         public ItemViewHolder(View v) {
             ButterKnife.bind(this, v);
         }
     }
 
-    public ProductAdapter(Context c, List<Product> products) {
-        super(c, R.layout.item_product, products);
+    public TransactionAdapter(Context c, List<Transaction> transactions) {
+        super(c, R.layout.item_transaction, transactions);
     }
 
     @Override
@@ -47,16 +50,16 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            view = inflater.inflate(R.layout.item_product, viewGroup, false);
+            view = inflater.inflate(R.layout.item_transaction, viewGroup, false);
             viewHolder = new ItemViewHolder(view);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ItemViewHolder)view.getTag();
         }
-
-        Product product = getItem(pos);
-        viewHolder.tvTitle.setText(product.title);
-        viewHolder.tvPrice.setText(String.format("$%.2f", product.price));
+        Transaction transaction = getItem(pos);
+        viewHolder.tvTitle.setText(transaction.product.get("title").toString());
+        viewHolder.tvAmount.setText(String.format("$%.2f", Double.valueOf(transaction.product.get("amount").toString())));
+        viewHolder.tvStatus.setText(transaction.status);
 
         return view;
     }

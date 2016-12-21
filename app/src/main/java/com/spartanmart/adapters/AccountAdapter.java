@@ -64,7 +64,7 @@ public class AccountAdapter extends BaseAdapter {
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            view = inflater.inflate(R.layout.layout_account_item, viewGroup, false);
+            view = inflater.inflate(R.layout.item_account, viewGroup, false);
             viewHolder = new ItemViewHolder(view);
             view.setTag(viewHolder);
         } else {

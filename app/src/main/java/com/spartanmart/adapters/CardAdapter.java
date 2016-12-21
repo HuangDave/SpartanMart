@@ -9,54 +9,55 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.spartanmart.R;
-import com.spartanmart.model.Product;
+import com.spartanmart.model.Card;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by David on 12/15/16.
+ * Created by David on 12/19/16.
  */
 
-public class ProductAdapter extends ArrayAdapter<Product> {
+public class CardAdapter extends ArrayAdapter<Card> {
 
     public static class ItemViewHolder {
 
         @Nullable
-        @BindView(R.id.tvTitle)
-        TextView tvTitle;
+        @BindView(R.id.tvCardNumber)
+        TextView tvCardNumber;
 
         @Nullable
-        @BindView(R.id.tvPrice)
-        TextView tvPrice;
+        @BindView(R.id.tvType)
+        TextView tvType;
 
         public ItemViewHolder(View v) {
             ButterKnife.bind(this, v);
         }
     }
 
-    public ProductAdapter(Context c, List<Product> products) {
-        super(c, R.layout.item_product, products);
+    public CardAdapter(Context c, List<Card> cards) {
+        super(c, R.layout.item_card, cards);
     }
 
     @Override
     public View getView(int pos, View view, ViewGroup viewGroup) {
         ItemViewHolder viewHolder;
-
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            view = inflater.inflate(R.layout.item_product, viewGroup, false);
+            view = inflater.inflate(R.layout.item_card, viewGroup, false);
             viewHolder = new ItemViewHolder(view);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ItemViewHolder)view.getTag();
         }
 
-        Product product = getItem(pos);
-        viewHolder.tvTitle.setText(product.title);
-        viewHolder.tvPrice.setText(String.format("$%.2f", product.price));
+        Card card = getItem(pos);
+        String last4 = "Ending in ****" + card.last4;
+        viewHolder.tvCardNumber.setText(last4);
+        viewHolder.tvType.setText(card.brand);
 
         return view;
     }

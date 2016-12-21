@@ -32,6 +32,10 @@ public class Query {
         public static void recent(final int limit, Callback<List<com.spartanmart.model.Product>> callback) {
             mAPI.queryRecentProducts(mAuthToken, limit).enqueue(callback);
         }
+
+        public static void queryByKeyword(final String keyword, final int limit, Callback<List<com.spartanmart.model.Product>> callback) {
+            mAPI.queryByKeyword(mAuthToken, keyword, limit).enqueue(callback);
+        }
     }
 
     public static class Transaction {
@@ -41,7 +45,7 @@ public class Query {
         }
 
         public static void byUserId(final String userId, Callback<List<com.spartanmart.model.Transaction>> callback) {
-
+            mAPI.listTransactions(mAuthToken, userId).enqueue(callback);
         }
     }
 }

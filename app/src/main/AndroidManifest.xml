@@ -41,7 +41,7 @@
             android:name=".activities.product_management.UserProductsAcitivity"
             android:label="Your Posts" />
         <activity
-            android:name=".activities.product_management.UserProductsAcitivity$EditProductActivity"
+            android:name=".activities.product_management.EditProductActivity"
             android:label="Edit Product"
             android:parentActivityName=".activities.product_management.UserProductsAcitivity" />
         <activity
